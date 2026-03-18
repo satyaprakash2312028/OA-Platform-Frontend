@@ -1,0 +1,5 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: all; /* This ensures all 30+ themes are included */
+}
+@plugin "@tailwindcss/typography";
