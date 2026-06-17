@@ -40,7 +40,7 @@ const ContestListPage = () => {
       exit={{ opacity: 0, translateY: -30 }}
       transition={{ duration: 0.5, type: "spring" }}
     >
-      <ul className="list bg-base-200 rounded-box shadow-md font-mono">
+      <ul className="list bg-base-200/40 backdrop-blur-xs rounded-box shadow-md font-mono">
         <motion.li
           className="p-4 pb-6 ml-6 text-base tracking-wide w-full space-x-2 flex justify-between items-center"
           initial={{ translateX: -10, opacity: 0, scale: 0.5 }}

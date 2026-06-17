@@ -109,7 +109,7 @@ const ContestDetailPage = () => {
                 <span>Leaderboard</span>
               </motion.button>
           </motion.div>
-          <ul className="list bg-base-200 rounded-box shadow-md font-mono">
+          <ul className="list bg-base-200/40 backdrop-blur-xs rounded-box shadow-md font-mono">
             <AnimatePresence mode='wait' layout>
               {problems.map((p, idx) => (
                 <motion.li
