@@ -16,7 +16,7 @@ const Navbar = () => {
     if (authUser) await logout();
   }
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "cupcake" : "dark");
+    setTheme(theme === "sunset" ? "fantasy" : "sunset");
     console.log(theme);
   }
   useEffect(() => {
@@ -111,7 +111,7 @@ const Navbar = () => {
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
           to="/login"
-          className="bg-base-300 btn border-none btn-soft shadow-none w-fit space-x-0 gap-0  transition-colors duration-300 hover:bg-success">
+          className="bg-base-300 btn border-none btn-soft shadow-none w-fit space-x-0 gap-0  transition-colors duration-300 hover:bg-success hover:text-primary">
           <User2 size={18} className="" />
           <span className='opacity-0 max-w-0 lg:max-w-2xl lg:ml-1.5 ml-0 lg:opacity-100 whitespace-nowrap overflow-hidden transition-all duration-300'>Login</span>
         </MotionLink>

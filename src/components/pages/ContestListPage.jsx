@@ -3,8 +3,8 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 // import useContestStore from '../../store/useContestStore'
 import axiosInstance from '../../lib/axios'
 import toast from 'react-hot-toast'
-import { Dot, ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
-import { parseDateVector, parseDateToString } from '../../lib/utility'
+import { Dot, ChevronLeftIcon, ChevronRightIcon, Space, List } from 'lucide-react'
+import { parseDateVector, parseDateToString, parseTimeVector } from '../../lib/utility'
 import { motion, AnimatePresence } from 'motion/react'
 const MotionLink = motion.create(Link);
 const ContestListPage = () => {
@@ -24,7 +24,6 @@ const ContestListPage = () => {
         setTotalPages(res.data.totalPages);
         setContests(res.data.assessments);
         console.log(res.data.assessments);
-        console.log(Date.now()>(new Date(res.data.assessments[1].startTime)));
         setIsLoading(false);
       }).catch(error => {
         console.log(error);
@@ -35,7 +34,7 @@ const ContestListPage = () => {
 
   return (
     <motion.div
-      className="mt-36 mx-6 lg:mx-36 min-w-fit"
+      className="mt-36 mx-6 lg:mx-36 min-w-fit mb-10"
       initial={{ opacity: 0, translateY: -30 }}
       animate={{ opacity: 1, translateY: 0 }}
       exit={{ opacity: 0, translateY: -30 }}
@@ -49,7 +48,9 @@ const ContestListPage = () => {
           transition={{ duration: 0.7, type: "spring" }}
         >
 
-          <span className="p-4 pb-2 opacity-60 tracking-wide">Contests</span>
+          <span className="p-4 pb-2 opacity-60 tracking-wide flex items-center space-x-2">
+          <List size={18}/><span>Contests</span>
+          </span>
           <div className='space-x-2 mr-1'>
             <div className="join space-x-2 scale-[102%]">
               <MotionLink
@@ -79,7 +80,7 @@ const ContestListPage = () => {
             <AnimatePresence mode='wait' layout>
           {contests.map((p, idx) => (
             <motion.li
-              className={`list-row items-center p-4 space-x-1 `} key={p._id}
+              className={`list-row items-center p-6 space-x-1 `} key={p._id}
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
@@ -95,6 +96,11 @@ const ContestListPage = () => {
               <span 
               className="text-[1rem] font-mono text-base-content/55">
                 {parseDateToString((new Date(p.startTime)))}
+                <br></br>
+                {(parseTimeVector(new Date(p.startTime))[0]).toString().padStart(2, '0')}:
+                {(parseTimeVector(new Date(p.startTime))[1]).toString().padStart(2, '0')} 
+                {(parseTimeVector(new Date(p.startTime))[0])>11?' PM':' AM'}
+                
               </span>
               <MotionLink
                 className="hover:scale-120 transition-all duration-300 hover:bg-base-300/75  btn btn-ghost btn-circle border-none shadow-none bg-base-200/40 lg:ml-10 ml-3"

@@ -27,6 +27,7 @@ import Dashboard from './components/pages/Dashboard.jsx'
 import SubmissionsPage from './components/pages/SubmissionsPage.jsx'
 import ContestRegisterPage from './components/pages/ContestRegisterPage.jsx'
 import Timer from './components/Timer.jsx'
+import Leaderboard from './components/pages/Leaderboard.jsx'
 import { LogIn } from 'lucide-react'
 // import NotFoundPage from './components/pages/NotFoundPage.jsx'
 
@@ -93,6 +94,7 @@ function App() {
         <Route path="/contest/:contestId" element={<ContestDetailPage />} />
         <Route path="/problem/:problemId" element={<ProblemDetailPage isAssessment={false}/>} />
         <Route path="/problem/live/:problemId" element={<ProblemDetailPage isAssessment={true}/>} />
+        <Route path="/leaderboard/:contestId/page/:paramPage" element={<Leaderboard />} />
         {/* <Route path="/submit" element={<SubmitProblemPage />} /> */}
         {/* <Route path="/submit/:problemId" element={<SubmitProblemPage />} /> */}
         {/* <Route path="/profile" element={<ProfilePage />} /> */}

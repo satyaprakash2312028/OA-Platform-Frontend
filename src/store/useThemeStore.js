@@ -1,9 +1,9 @@
 import {create} from "zustand"
 
 const useThemeStore = create((set)=>({
-    theme: "dark",
+    theme: localStorage.getItem("codephilia-theme")||"cupcake",
     setTheme: (theme) => {
-        localStorage.setItem("chat-theme", theme);
+        localStorage.setItem("codephilia-theme", theme);
         set({theme});
     },
 }));

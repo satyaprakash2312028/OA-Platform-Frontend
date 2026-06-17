@@ -9,10 +9,10 @@ const MotionFileKey = motion.create(FileKey);
 
 const ContestRegisterPage = () => {
   const { contestId } = useParams();
-  const navigate = useNavigate();
   const [teamName, setTeamName] = useState('');
   const [existingTeamID, setExistingTeamID] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!contestId) {
@@ -24,6 +24,7 @@ const ContestRegisterPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!teamName.trim() && !existingTeamID.trim()) {
+      toast.dismiss();
       toast.error('Please enter a team name or existing team ID');
       return;
     }
@@ -37,8 +38,8 @@ const ContestRegisterPage = () => {
       };
       const res = await axiosInstance.post('/registration/register', payload);
       toast.dismiss();
-      toast.success('Registered successfully\nTeam ID: ' + res.data.teamId + '\n(Team ID copied to clipboard)');
-      await navigator.clipboard.writeText(res.data.teamId);
+      toast.success('Registered successfully\nTeam ID: ' + res.data.team + '\n(Team ID copied to clipboard)');
+      await navigator.clipboard.writeText(res.data.team);
       // navigate after a short delay to allow users to see the toast
       setTimeout(() => {
         navigate(`/contest/${contestId}`);

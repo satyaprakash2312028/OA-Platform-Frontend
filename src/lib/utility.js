@@ -19,7 +19,7 @@ const parseDateToString = (timestamp) => {
 const parseTimeVector = (timestamp) => {
   const dateObj = new Date(timestamp);
   const hours = dateObj.getHours();
-  const minutes = dateObj.getMinutes() + 1; // JavaScript months are 0-indexed (0 = Jan)
+  const minutes = dateObj.getMinutes();
   return [hours, minutes];
 }
 

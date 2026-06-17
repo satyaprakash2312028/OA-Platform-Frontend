@@ -29,6 +29,7 @@ const ProblemStatement = () => {
                     setProblemId(problemId);
                     setAssessmentId(res.data.assessment??null);
                     setIsLoading(false);
+                    // console.log("Assessment ID in ProblemDetailPage:", assessmentId);
                 })
                 .catch(err => { toast.dismiss(); toast.error(err?.response?.data?.message || "No such problem found"); navigate(-1); });
             }catch(error){

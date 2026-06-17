@@ -26,7 +26,7 @@ const Editor = () => {
     }, [language]); // <--- CRITICAL: Re-run when 'language' changes
 
     const themeExtension = useMemo(() => {
-        return theme === 'dark' ? dracula : []; 
+        return theme === 'sunset' ? dracula : []; 
     }, [theme]);
 
     const autocompleteExtension = useMemo(() => {

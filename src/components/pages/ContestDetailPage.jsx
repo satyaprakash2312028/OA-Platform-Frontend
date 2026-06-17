@@ -5,7 +5,7 @@ import axiosInstance from '../../lib/axios'
 import toast from 'react-hot-toast'
 import { motion, AnimatePresence } from 'motion/react'
 import Timer from '../Timer.jsx'
-import { Check, ChevronRightIcon } from 'lucide-react'
+import { Check, ChevronRightIcon, Trophy } from 'lucide-react'
 const MotionLink = motion.create(Link)
 const ContestDetailPage = () => {
   const { contestId } = useParams();
@@ -31,6 +31,7 @@ const ContestDetailPage = () => {
         setStarted(true);
       })
       .catch(error => {
+        console.log(error);
         if (error.status == 423) {
           toast.dismiss();
           toast("Refresh the page at the contest start time to access the problems.", { icon: '⏳' });
@@ -78,20 +79,36 @@ const ContestDetailPage = () => {
   return (
     <>
       {((new Date(endTime)).getTime()>Date.now())&&<motion.div 
-      initial={{y:-350}}
+      initial={{y:-110}}
       animate={{y:0}}
-      transition={{duration:0.5, type:"spring", delay:0.3}}
-      className='bg-base-200/50 shadow-2xl rounded-b-4xl fixed top-0 right-0 scale-50 w-fit translate-y-2 translate-x-33'>
+      transition={{duration:0.5, type:"spring"}}
+      className='shadow-lg z-100 bg-base-300/30 backdrop-blur-xs w-xl flex justify-center items-center rounded-4xl scale-45 fixed -right-35 top-5'>
         <Timer endTime={(new Date(endTime)).getTime()} />
       </motion.div>}
       <div>
+        
         <motion.div
-          className="mt-52 mx-6 lg:mx-36 min-w-fit"
+          className="mt-52 mx-6 lg:mx-36 min-w-fit space-y-6 mb-10"
           initial={{ opacity: 0, translateY: -30 }}
           animate={{ opacity: 1, translateY: 0 }}
           exit={{ opacity: 0, translateY: -30 }}
           transition={{ duration: 0.5, type: "spring" }}
         >
+          <motion.div
+            className='flex items-center space-x-3'
+          >
+              <motion.button
+                className="btn btn-primary mt-4 w-max shadow-md px-3 flex items-center space-x-2"
+                initial={{ opacity: 0.2, scale: 0.8, translateY: -35 }}
+                animate={{ opacity: 1, scale: 1, translateY: 0, transition: { duration: 0.5, type: "spring" } }}
+                whileHover={{ scale: 1.05, boxShadow: "0px 10px 15px -3px rgba(0, 0, 0, 0.3)", transition: { duration: 0.2, type: "tween" } }}
+                whileTap={{ scale: 0.95, boxShadow: "0px 3px 15px -3px rgba(0, 0, 0, 0.3)", transition: { duration: 0.2, type: "tween" } }}
+                onClick={() => {navigate(`/leaderboard/${contestId}/page/1`)}}
+              >
+                <Trophy size={18}/>
+                <span>Leaderboard</span>
+              </motion.button>
+          </motion.div>
           <ul className="list bg-base-200 rounded-box shadow-md font-mono">
             <AnimatePresence mode='wait' layout>
               {problems.map((p, idx) => (
@@ -106,18 +123,15 @@ const ContestDetailPage = () => {
                     {p.isSolved ? <Check size={18} className='text-success' /> : <></>}
                   </div>
                   <div>
-                    <div className='overflow-hidden'><span className="text-[1.1rem] font-mono">{p.name}</span></div>
+                    <div className='overflow-hidden'><span className="text-[1.1rem] font-mono">{`${String.fromCharCode((('A').charCodeAt(0)+idx))}. ${p.name}`}</span></div>
                     {/* <div className="text-xs uppercase font-semibold opacity-60">Cappuccino</div> */}
                   </div>
                   <MotionLink
                     className="hover:scale-120 transition-all duration-300 hover:bg-base-300/75  btn btn-ghost btn-circle border-none shadow-none bg-base-200/40 lg:ml-10 ml-3"
                     to={`/problem/${(Date.now() >= startTime && Date.now() <= endTime) ? 'live/' : ''}${p._id}`}
                   >
-                    <ChevronRightIcon size={18} />
+                    <ChevronRightIcon size={18} className='text-primary'/>
                   </MotionLink>
-                  {/* <button className="btn btn-square btn-ghost">
-              <svg className="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></g></svg>
-            </button> */}
                 </motion.li>
               ))}
 

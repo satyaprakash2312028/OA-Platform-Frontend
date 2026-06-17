@@ -8,23 +8,23 @@ const subscribeToBroadcast = () => {
         unSubscribeToBroadcast();
     }, 32000);
     if(socket.hasListeners("statusUpdate")) return;
-    socket.on("statusUpdate", ({submissionId, status, verdict})=>{
-        console.log("Received status update:", {submissionId, status, verdict});
+    socket.on("statusUpdate", ({_id, status, verdict})=>{
+        console.log("Received status update:", {_id, status, verdict});
         if(verdict){
             if(verdict=="Accepted"){
                 toast.success(`${verdict}`,{
-                    id: submissionId,
+                    id: _id,
                     duration: 3000
                 });
             }else{
                 toast.error(`${status}`,{
-                    id: submissionId,
+                    id: _id,
                     duration: 3000
                 });
             }
         }else if(status){
             toast.loading(`${status}`,{
-                id: submissionId,
+                id: _id,
                 duration: 5000
             });
         }

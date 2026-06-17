@@ -24,7 +24,7 @@ const Dashboard = () => {
     axiosInstance.get('/dashboard/recentSubmissions')
       .then(res => { setRecentSubmission(res.data.submissions); })
     axiosInstance.get('/dashboard/lastAcceptedSubmission')
-      .then(res => { setLastAcceptedSubmission(parseDateVector(res.data.submission.createdAt)); })
+      .then(res => {res.data.submission? setLastAcceptedSubmission(parseDateVector(res.data.submission.createdAt)):null; })
   }, [axiosInstance, setRecentSubmission, setProblemSolved, setContestGiven, setLastAcceptedSubmission, parseDateVector]);
   useEffect(() => {
     if (authUser?.createdAt != undefined) { setMemberSince(parseDateVector(authUser?.createdAt)); }
@@ -38,7 +38,7 @@ const Dashboard = () => {
     }
   return (
     <motion.div
-      className='min-h-full h-fit mt-24 bg-base-300 mx-3 rounded-lg mb-10 p-4'
+      className='min-h-full h-fit mt-24 mx-3 rounded-lg mb-10 p-4'
       initial={{ scale: 0.9, opacity: 0 }}
       animate={{ scale: 1, opacity: 1 }}
       transition={{ duration: 0.7, type: "spring" }}
@@ -48,12 +48,12 @@ const Dashboard = () => {
         className='flex flex-col md:flex-row justify-center items-center h-fit w-full space-y-5 md:space-y-0 md:space-x-5 '
       >
         <motion.div
-          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-100 hover:shadow-lg flex justify-center overflow'
+          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-200 hover:shadow-lg flex justify-center overflow'
           initial={{ scale: 0.4, translateY: -40 }}
           animate={{ scale: 1, translateY: 0 }}
           whileHover={{ scale: 1.03, transition: { type: "tween", duration: 0.3 } }}
         >
-          <div className="stat hover:text-primary hover:animate-pulse transition-colors duration-300">
+          <div className="stat text-primary/80">
             <div className="stat-title">Total Problems Solved</div>
             <div className="stat-value mx-auto">
               <span className="countdown font-mono sm:text-4xl text-3xl">
@@ -63,12 +63,12 @@ const Dashboard = () => {
           </div>
         </motion.div>
         <motion.div
-          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-100 hover:shadow-lg flex justify-center overflow'
+          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-200 hover:shadow-lg flex justify-center overflow'
           initial={{ scale: 0.4, translateY: -80 }}
           animate={{ scale: 1, translateY: 0 }}
           whileHover={{ scale: 1.03, transition: { type: "tween", duration: 0.3 } }}
         >
-          <div className="stat hover:text-primary hover:animate-pulse transition-color duration-300">
+          <div className="stat text-primary/80">
             <div className="stat-title">Total Contest Given</div>
             <div className="stat-value mx-auto">
               <span className="countdown font-mono sm:text-4xl text-3xl">
@@ -78,12 +78,12 @@ const Dashboard = () => {
           </div>
         </motion.div>
         <motion.div
-          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-100 hover:shadow-lg flex justify-center overflow'
+          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-200 hover:shadow-lg flex justify-center overflow'
           initial={{ scale: 0.4, translateY: -80 }}
           animate={{ scale: 1, translateY: 0 }}
           whileHover={{ scale: 1.03, transition: { type: "tween", duration: 0.3 } }}
         >
-          <div className="stat hover:text-primary hover:animate-pulse transition-color duration-300">
+          <div className="stat text-primary/80">
             <div className="stat-title">Member Since</div>
             <div className="stat-value mx-auto">
               <span className="countdown font-mono sm:text-4xl text-3xl">
@@ -101,12 +101,12 @@ const Dashboard = () => {
           </div>
         </motion.div>
         <motion.div
-          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-100 hover:shadow-lg flex justify-center overflow'
+          className='stats min-w-max shadow rounded-lg w-full h-48 bg-base-200 hover:shadow-lg flex justify-center overflow'
           initial={{ scale: 0.4, translateY: -80 }}
           animate={{ scale: 1, translateY: 0 }}
           whileHover={{ scale: 1.03, transition: { type: "tween", duration: 0.3 } }}
         >
-          <div className="stat hover:text-primary hover:animate-pulse transition-color duration-300">
+          <div className="stat text-primary/80">
             <div className="stat-title">Last accepted submission at</div>
             <div className="stat-value mx-auto">
               <span className="countdown font-mono sm:text-4xl text-3xl">
@@ -125,7 +125,7 @@ const Dashboard = () => {
         </motion.div>
       </motion.div>
       <motion.div>
-        <div className='mt-8 flex justify-between items-center px-1 mb-3 bg-base-100 rounded-lg py-2'>
+        <div className='mt-8 flex justify-between items-center px-1 mb-3 bg-base-200 rounded-lg py-2'>
           <div className='w-fit px-4'>
             <span>Recent  Submissions</span>
           </div>

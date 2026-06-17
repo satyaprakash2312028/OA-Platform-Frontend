@@ -27,31 +27,28 @@ const editorStore = create((set, get) => ({
         set({ isSubmitting: true });
         set({cooldown: true});
         try {
-            if (get.problemId === "" || get.problemId === null) {
+            if (get().problemId === "" || get().problemId === null) {
                 toast.dismiss();
                 toast.error("Please provide Problem ID");
                 set({ isSubmitting: false });
                 return;
             }
-            axiosInstance.post(`problem/submitProblem/${get().problemId}`, {
+            const res = await axiosInstance.post(`/problem/submitProblem/${get().problemId}`, {
                 assessmentID: get().assessmentId,
                 code: get().code,
                 language: get().language
-            }).then(res => {
-                toast.loading(`${res.data.message}`, {
-                    id: res.data.submissionId,
-                    duration: 3000
-                });
-                subscribeToBroadcast();
-            }).catch(err => {
-                console.log(err);
-                toast.dismiss();
-                toast.error(err?.response?.data?.message || 'Failed to submit the code.');
-            })
+            });
+            console.log(res);
+            toast.loading(`Processing Submission: ${res.data._id}`, {
+                id: res.data._id,
+                duration: 3000
+            });
+            subscribeToBroadcast();
 
         } catch (error) {
+            console.log(error);
             toast.dismiss();
-            toast.error(err?.response?.data?.message || 'Failed to submit the code.');
+            toast.error(error?.response?.data?.message || 'Failed to submit the code.');
         } finally {
             set({ isSubmitting: false });
             setTimeout(() => {

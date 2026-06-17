@@ -17,10 +17,10 @@ const ProblemDetailPage = ({ isAssessment }) => {
   const { setNavVisibility } = useNavStore();
   useEffect(() => {
     setNavVisibility(false);
-    return () => {setAssessmentId(null); setNavVisibility(true);};
+    return () => {setAssessmentId(''); setNavVisibility(true);};
   },[setAssessmentId, setNavVisibility])
   useEffect(() => {
-    console.log("Assessment ID in ProblemDetailPage:", isAssessment);
+    console.log("Assessment ID in ProblemDetailPage:", assessmentId);
     if(assessmentId===null&&isAssessment){
       toast.dismiss();
       toast.error("This problem is not part of any assessment.");
