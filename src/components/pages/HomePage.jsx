@@ -36,7 +36,7 @@ const HomePage = React.memo(() => {
         className="max-w-7xl mx-auto text-center mt-16 md:mt-24 mb-32"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.4 , type: 'spring'}}
       >
         <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-base-200/50 border border-base-300 backdrop-blur-md mb-8 shadow-sm">
           <Activity className="size-4 text-success animate-pulse" />
