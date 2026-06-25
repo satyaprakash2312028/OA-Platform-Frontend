@@ -145,11 +145,12 @@ const authStore = create((set, get) => ({
         const socket = io(BASE_URL, {
             query:{
                 userId: authUser._id
-            }
+            },
+            transports: ["websocket"],
+            withCredentials: true
         });
         socket.connect();
         set({socket:socket});
-        console.log("Sct");
     },
     disconnectSocket: () => {
         if(get().socket?.connected) get().socket.disconnect();
