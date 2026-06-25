@@ -39,7 +39,7 @@ const getTimeDifference = (timestamp1, timestamp2) => {
 }
 
 const parseDurationVector = (diffms) =>{
-  const diffs = Math.floor(Math.abs(diffms)/1000);
+  let diffs = Math.floor(Math.abs(diffms)/1000);
   let days = Math.floor(diffs/86400);
   diffs %= 86400;
   const hours = Math.floor(diffs/3600);
