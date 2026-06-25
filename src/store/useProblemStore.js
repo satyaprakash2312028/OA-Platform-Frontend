@@ -2,10 +2,8 @@ import {create} from "zustand";
 import axiosInstance from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-import dotenv from "dotenv"
-dotenv.config();
 
-const BASE_URL = process.env.BACKEND_URL;
+const BASE_URL = import.meta.env.BACKEND_URL;
 const problemStore = create((set, get) => ({
     pageNumber: 0,
     isLoading: false,

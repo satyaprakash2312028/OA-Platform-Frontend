@@ -1,9 +1,6 @@
 import axios from "axios";
-import dotenv from "dotenv";
-
-dotenv.config();
 const axiosInstance = axios.create({
-  baseURL: process.env.BACKEND_URL,
+  baseURL: import.meta.env.BACKEND_URL,
   withCredentials: true,
 });
 

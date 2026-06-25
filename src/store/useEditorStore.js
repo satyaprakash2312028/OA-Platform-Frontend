@@ -2,12 +2,10 @@ import { create } from "zustand";
 import axiosInstance from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
-import dotenv from "dotenv"
 import { subscribeToBroadcast, unSubscribeToBroadcast } from "../lib/socket.js";
 
-dotenv.config();
 
-const BASE_URL = process.env.BACKEND_URL;
+const BASE_URL = import.meta.env.BACKEND_URL;
 const editorStore = create((set, get) => ({
     problemId: null,
     code: "#include <iostream>\n\nint main() {\n\tstd::cout << \"Hello World\";\n\treturn 0;\n}",
