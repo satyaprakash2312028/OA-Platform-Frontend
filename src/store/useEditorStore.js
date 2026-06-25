@@ -5,7 +5,7 @@ import { io } from "socket.io-client";
 import { subscribeToBroadcast, unSubscribeToBroadcast } from "../lib/socket.js";
 
 
-const BASE_URL = import.meta.env.BACKEND_URL;
+const BASE_URL = import.meta.env.VITE_BACKEND_URL;
 const editorStore = create((set, get) => ({
     problemId: null,
     code: "#include <iostream>\n\nint main() {\n\tstd::cout << \"Hello World\";\n\treturn 0;\n}",
