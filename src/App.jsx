@@ -31,6 +31,7 @@ import Leaderboard from './components/pages/Leaderboard.jsx'
 import { LogIn } from 'lucide-react'
 import HomePage from './components/pages/HomePage.jsx'
 import Animation from './components/pages/Animation.jsx'
+import SubmissionDetailPage from './components/pages/SubmissionDetailPage.jsx'
 // import NotFoundPage from './components/pages/NotFoundPage.jsx'
 
 function App() {
@@ -86,8 +87,9 @@ function App() {
         <Route path="/contest/:contestId" element={<ContestDetailPage />} />
         <Route path="/problem/:problemId" element={<ProblemDetailPage isAssessment={false}/>} />
         <Route path="/problem/live/:problemId" element={<ProblemDetailPage isAssessment={true}/>} />
+        <Route path="/submission/:id" element={<SubmissionDetailPage />} />
         <Route path="/leaderboard/:contestId/page/:paramPage" element={<Leaderboard />} />
-        <Route path="/login" element={<Navigate to="/problemset/page/1" replace />} />
+        <Route path="/login" element={<Navigate to="/" replace />} />
         <Route path="/register/:contestId" element={<ContestRegisterPage />} />
         <Route path="*" element={<Navigate to="/problemset/page/1" replace />} />
       </Routes>

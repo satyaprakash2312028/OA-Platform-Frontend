@@ -2,22 +2,32 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { 
   Terminal, Database, Cpu, Layers, Activity, 
-  ShieldAlert, Zap, Users, Code2, ArrowRight, CheckCircle2 
+  ShieldAlert, Users, ArrowRight, CheckCircle2 
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const HomePage = () => {
-  // Animation Variants
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
-  };
+// 1. Hoist Animation Configurations
+const FADE_UP = {
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+};
 
-  const staggerContainer = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
-  };
+const STAGGER_CONTAINER = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { staggerChildren: 0.15 } },
+};
 
+const TITLE_BG_ANIM = { 
+  backgroundPosition: ["0% 100%", "100% 100%", "100% 0%", '100% 100%', '0% 100%'] 
+};
+
+const TITLE_BG_TRANSITION = { 
+  duration: 9, 
+  repeat: Infinity, 
+  ease: "linear" 
+};
+
+const HomePage = React.memo(() => {
   return (
     <div className="min-h-screen pt-20 pb-24 px-4 sm:px-6 lg:px-8 text-base-content overflow-x-hidden">
       
@@ -26,7 +36,7 @@ const HomePage = () => {
         className="max-w-7xl mx-auto text-center mt-16 md:mt-24 mb-32"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.4 }}
       >
         <div className="inline-flex items-center gap-2 px-6 py-2 rounded-full bg-base-200/50 border border-base-300 backdrop-blur-md mb-8 shadow-sm">
           <Activity className="size-4 text-success animate-pulse" />
@@ -38,8 +48,8 @@ const HomePage = () => {
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter mb-8 leading-[1.05]">
           A Distributed Engine for <br/>
           <motion.span 
-            animate={{ backgroundPosition: ["0% 100%", "100% 100%", "100% 0%", '100% 100%', '0% 100%'] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+            animate={TITLE_BG_ANIM}
+            transition={TITLE_BG_TRANSITION}
             className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent bg-[length:200%_auto]"
           >
             Algorithmic Excellence.
@@ -73,11 +83,10 @@ const HomePage = () => {
         </motion.div>
 
         <motion.div 
-          variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
+          variants={STAGGER_CONTAINER} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {/* Card 1: BullMQ */}
-          <motion.div variants={fadeUp} className="card bg-base-100/50 backdrop-blur-sm border border-base-200 shadow-xl hover:border-primary/50 transition-colors group duration-300">
+          <motion.div variants={FADE_UP} className="card bg-base-100/50 backdrop-blur-xs border border-base-200 shadow-xl hover:border-primary/50 transition-colors group duration-300">
             <div className="card-body">
               <div className="p-4 bg-primary/10 rounded-2xl w-fit mb-4 group-hover:scale-110 transition-transform">
                 <Layers className="size-8 text-primary" />
@@ -89,8 +98,7 @@ const HomePage = () => {
             </div>
           </motion.div>
 
-          {/* Card 2: Redis ZSETs */}
-          <motion.div variants={fadeUp} className="card bg-base-100/50 backdrop-blur-sm border border-base-200 shadow-xl hover:border-secondary/50 transition-colors group duration-300">
+          <motion.div variants={FADE_UP} className="card bg-base-100/50 backdrop-blur-xs border border-base-200 shadow-xl hover:border-secondary/50 transition-colors group duration-300">
             <div className="card-body">
               <div className="p-4 bg-secondary/10 rounded-2xl w-fit mb-4 group-hover:scale-110 transition-transform">
                 <Database className="size-8 text-secondary" />
@@ -102,8 +110,7 @@ const HomePage = () => {
             </div>
           </motion.div>
 
-          {/* Card 3: Docker Sandbox */}
-          <motion.div variants={fadeUp} className="card bg-base-100/50 backdrop-blur-sm border border-base-200 shadow-xl hover:border-error/50 transition-colors group duration-300">
+          <motion.div variants={FADE_UP} className="card bg-base-100/50 backdrop-blur-xs border border-base-200 shadow-xl hover:border-error/50 transition-colors group duration-300">
             <div className="card-body">
               <div className="p-4 bg-error/10 rounded-2xl w-fit mb-4 group-hover:scale-110 transition-transform">
                 <ShieldAlert className="size-8 text-error" />
@@ -117,9 +124,9 @@ const HomePage = () => {
         </motion.div>
       </div>
 
-      {/* --- THE ASSESSMENT ENGINE (Showcasing DB logic) --- */}
+      {/* --- THE ASSESSMENT ENGINE --- */}
       <motion.div 
-        className="max-w-7xl mx-auto mb-32 bg-base-200/40 rounded-[2rem] border border-base-300 overflow-hidden shadow-2xl"
+        className="max-w-7xl mx-auto mb-32 bg-base-200/40 rounded-[2rem] border border-base-300 overflow-hidden shadow-2xl backdrop-blur-xs"
         initial={{ opacity: 0, y: 50 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}
       >
         <div className="grid grid-cols-1 lg:grid-cols-2">
@@ -156,7 +163,6 @@ const HomePage = () => {
             </ul>
           </div>
           
-          {/* Faux Code Editor Window to look extremely technical */}
           <div className="bg-[#0D1117] p-8 lg:p-12 relative border-l border-base-300/20">
             <div className="absolute top-4 left-4 flex gap-2">
               <div className="size-3 rounded-full bg-error/80"></div>
@@ -212,6 +218,7 @@ const HomePage = () => {
 
     </div>
   );
-};
+});
 
+HomePage.displayName = 'HomePage';
 export default HomePage;

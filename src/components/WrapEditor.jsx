@@ -1,11 +1,44 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
 import Editor from './Editor.jsx';
-import { ChevronDown } from 'lucide-react'; // Optional: Use an icon library or just text 'v'
+import { ChevronDown } from 'lucide-react'; 
 import useEditorStore from '../store/useEditorStore.js';
-const WrapEditor = () => {
-    const { language, setLanguage } = useEditorStore();
+
+// 1. Hoist Constants
+// Prevents recreating the array in memory on every keystroke/render
+const LANGUAGES = [
+    { id: 'cpp', label: 'C++' },
+    { id: 'java', label: 'Java' },
+    { id: 'python', label: 'Python' }
+];
+
+// 2. Pre-compute Map for O(1) Lookups
+// Replaces the O(N) array .find() method used in the render function
+const LANGUAGE_LABEL_MAP = {
+    cpp: 'C++',
+    java: 'Java',
+    python: 'Python'
+};
+
+const WrapEditor = React.memo(() => {
+    // 3. Granular Zustand Subscriptions (CRITICAL FIX)
+    // Subscribing only to `language` protects this wrapper from re-rendering 
+    // every time the user types and updates the `code` state in the store.
+    const language = useEditorStore((state) => state.language);
+    const setLanguage = useEditorStore((state) => state.setLanguage);
+    
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
+
+    // 4. Stable Callbacks
+    // Keeps function references stable so child elements don't see prop changes
+    const toggleDropdown = useCallback(() => {
+        setIsOpen((prev) => !prev);
+    }, []);
+
+    const handleSelect = useCallback((id) => {
+        setLanguage(id);
+        setIsOpen(false);
+    }, [setLanguage]);
 
     // Close dropdown if clicked outside
     useEffect(() => {
@@ -14,25 +47,16 @@ const WrapEditor = () => {
                 setIsOpen(false);
             }
         };
+        
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
     }, []);
 
-    const languages = [
-        { id: 'cpp', label: 'C++' },
-        { id: 'java', label: 'Java' },
-        { id: 'python', label: 'Python' }
-    ];
-
-    const handleSelect = (id) => {
-        setLanguage(id);
-        setIsOpen(false);
-    };
+    const currentLabel = LANGUAGE_LABEL_MAP[language] || 'C++';
 
     return (
         <div className='flex h-dvh flex-col overflow-y-auto overflow-x-hidden bg-base-200 z-20'>
-            <div className='relative z-10  w-full min-w-96 font-mono' ref={dropdownRef}>
-                {/* 1. The Trigger Button (Replaces <select>) */}
+            <div className='relative z-10 w-full min-w-96 font-mono' ref={dropdownRef}>
                 <span 
                     className="
                         flex items-center justify-between px-4 py-2 w-28
@@ -40,18 +64,16 @@ const WrapEditor = () => {
                         text-sm font-semibold mb-1
                     "
                 >
-                    {/* Display the Label for the current ID */}
-                    <span>{languages.find(l => l.id === language)?.label}</span>
+                    <span>{currentLabel}</span>
                     
-                    {/* Arrow Icon with rotation animation */}
                     <button 
-                    onClick={() => setIsOpen(!isOpen)}
-                    className={`transform transition-all flex justify-center items-center rounded-md duration-300 bg-base-200 hover:bg-base-300 size-6`}>
+                        onClick={toggleDropdown}
+                        className={`transform transition-all flex justify-center items-center rounded-md duration-300 bg-base-200 hover:bg-base-300 size-6`}
+                    >
                         <ChevronDown size={16} className={`${isOpen ? 'rotate-180' : 'rotate-0'} transition-[rotate] duration-300`}/>
                     </button>
                 </span>
 
-                {/* 2. The Dropdown List (Replaces <option>s) */}
                 <div 
                     className={`
                         absolute top-full left-0 mt-2 w-32 
@@ -61,7 +83,7 @@ const WrapEditor = () => {
                     `}
                 >
                     <ul className="flex flex-col">
-                        {languages.map((item) => (
+                        {LANGUAGES.map((item) => (
                             <li 
                                 key={item.id}
                                 onClick={() => handleSelect(item.id)}
@@ -78,9 +100,11 @@ const WrapEditor = () => {
                 </div>
             </div>
 
-            <Editor/>
+            <Editor />
         </div>
     );
-}
+});
+
+WrapEditor.displayName = 'WrapEditor';
 
 export default WrapEditor;

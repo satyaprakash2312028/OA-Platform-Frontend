@@ -40,7 +40,7 @@ const ContestListPage = () => {
       exit={{ opacity: 0, translateY: -30 }}
       transition={{ duration: 0.5, type: "spring" }}
     >
-      <ul className="list bg-base-200/40 backdrop-blur-xs rounded-box shadow-md font-mono">
+      <ul className="list bg-base-200/40 backdrop-blur-xs rounded-box shadow-md">
         <motion.li
           className="p-4 pb-6 ml-6 text-base tracking-wide w-full space-x-2 flex justify-between items-center"
           initial={{ translateX: -10, opacity: 0, scale: 0.5 }}
@@ -90,11 +90,11 @@ const ContestListPage = () => {
                 {p.isRegistered ? (<Dot className={`text-success size-max ${(Date.now()<new Date(p.endTime)&&Date.now()>new Date(p.startTime))?'loading loading-ring loading-md':''}`}></Dot>) : <></>}
               </div>
               <div>
-                <div className='overflow-hidden'><span className={`text-[1.5rem] font-mono ${Date.now()>(new Date(p.endTime))?'opacity-35':''}`}>{p.title}</span></div>
+                <div className='overflow-hidden'><span className={`text-[1.2rem] tracking-wider ${Date.now()>(new Date(p.endTime))?'opacity-35':''}`}>{p.title}</span></div>
                 {/* <div className="text-xs uppercase font-semibold opacity-60">Cappuccino</div> */}
               </div>
               <span 
-              className="text-[1rem] font-mono text-base-content/55">
+              className="text-[0.85rem] tracking-widest text-base-content/55">
                 {parseDateToString((new Date(p.startTime)))}
                 <br></br>
                 {(parseTimeVector(new Date(p.startTime))[0]).toString().padStart(2, '0')}:
@@ -103,12 +103,12 @@ const ContestListPage = () => {
                 
               </span>
               <MotionLink
-                className="hover:scale-120 transition-all duration-300 hover:bg-base-300/75  btn btn-ghost btn-circle border-none shadow-none bg-base-200/40 lg:ml-10 ml-3"
+                className="hover:scale-120 transition-all duration-300 hover:bg-base-300/75 p-3 rounded-full bg-base-200/40 lg:ml-10 ml-3"
                 to={
                   Date.now()>(new Date(p.endTime))?`/contest/${p._id}`:(Date.now()<(new Date(p.startTime))?(p.isRegistered?`/contest/${p._id}`:`/register/${p._id}`):`/contest/${p._id}`)
                 }
               >
-                <span className='btn space-x-1 btn-square outline-none border-none shadow-none'><ChevronRightIcon size={18}/></span>
+                <span className='text-primary'><ChevronRightIcon size={18}/></span>
               </MotionLink>
               {/* <button className="btn btn-square btn-ghost">
               <svg className="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2" fill="none" stroke="currentColor"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"></path></g></svg>
