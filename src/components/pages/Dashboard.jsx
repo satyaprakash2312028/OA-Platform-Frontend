@@ -190,7 +190,7 @@ const Dashboard = React.memo(() => {
           </div>
         </div>
 
-        <motion.div layout className='w-full bg-base-100/25 backdrop-blur-xs rounded-lg px-16'>
+        <motion.div layout className='w-full bg-base-100/25 backdrop-blur-xs rounded-lg md:px-16 px-5'>
           <table className='min-w-max w-full table-fixed'>
             <thead className='font-bold'>
               <tr className='border-b border-base-300 '>
